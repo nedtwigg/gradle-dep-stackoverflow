@@ -6,6 +6,10 @@ buildscript {
 		classpath 'ca.cutterslade.gradle:gradle-dependency-analyze:1.2.2'
 	}
 }
+plugins {
+	id 'com.gradle.build-scan' version '1.13.4'
+}
+buildScan { termsOfServiceUrl = 'https://gradle.com/terms-of-service'; termsOfServiceAgree = 'yes' }
 
 apply plugin: 'java'
 apply plugin: 'ca.cutterslade.analyze'
