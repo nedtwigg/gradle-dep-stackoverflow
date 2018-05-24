@@ -1,0 +1,27 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'ca.cutterslade.gradle:gradle-dependency-analyze:1.2.2'
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'ca.cutterslade.analyze'
+String PLATFORM = 'win32.win32.x86_64'
+
+repositories {
+	mavenCentral()
+}
+dependencies {
+	compile 'org.eclipse.platform:org.eclipse.swt:3.106.3'
+}
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		def requested = details.requested
+		if (requested.name.contains('${osgi.platform}')) {
+			details.useTarget("${requested.group}:${requested.name.replace('${osgi.platform}', PLATFORM)}:${requested.version}")
+		}
+	}
+}
